@@ -4,7 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0a1f38">
-<title>MOVIQ Clinic — v13</title>
+<title>MOVIQ Clinic</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MOVIQ">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -94,7 +101,7 @@
 <body>
 
 <nav class="shell" aria-label="أقسام النظام">
-  <div class="brand"><div class="logo">MQ</div><div><b>MOVIQ Clinic</b><small>Move Smart.. Live Better · v13</small></div></div>
+  <div class="brand"><img src="icon-192.png" alt="MOVIQ" style="width:34px;height:34px;border-radius:9px;background:#fff;"><div><b>MOVIQ Clinic</b><small>Move Smart.. Live Better · v14</small></div></div>
   <button data-tab="booking"><span class="ic">🗓️</span><span>المواعيد</span></button>
   <button data-tab="hep"><span class="ic">🏃</span><span>التمارين</span></button>
   <button data-tab="diet"><span class="ic">🥗</span><span>الأنظمة <span class="lk">🔒</span></span></button>
@@ -114,7 +121,7 @@
 <!-- CLOUD SIGN-IN -->
 <div class="ov show" id="ov-login" style="z-index:80">
   <div class="sheet">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div class="logo" style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#123a63,#0e7c8c);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800">MQ</div><b>MOVIQ Clinic</b></div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><img src="icon-192.png" alt="MOVIQ" style="width:44px;height:44px;border-radius:11px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.15)"><b>MOVIQ Clinic</b></div>
     <h3 id="lg-title">بيفتح…</h3>
     <p id="lg-sub"></p>
     <div id="lg-form" style="display:none">
@@ -161,7 +168,7 @@
     <h3 class="own" style="margin-top:14px">النسخة الاحتياطية</h3>
     <p data-own="1">ملف واحد فيه كل حاجة: المواعيد، المرضى، الإيرادات، المصروفات، الخدمات، أسعار الحاسبة، وبرامج التمارين ومكتبتها، والأنظمة الغذائية وزياراتها. استخدمه كمان عشان تنقل الداتا من اللابتوب للموبايل أو العكس.</p>
     <div data-own="1" class="last" id="bk-last"></div>
-    <p style="margin:6px 0 0;font-size:11px;text-align:center;">إصدار النظام: <b>v13</b> — 17-11-2026</p>
+    <p style="margin:6px 0 0;font-size:11px;text-align:center;">إصدار النظام: <b>v14</b> — 17-11-2026</p>
     <button data-own="1" class="btn btn-main" id="bk-share" style="background:#25D366;">📤 ابعت النسخة لنفسك (واتساب / درايف)</button>
     <details data-own="1" style="margin-top:10px;border:1px solid var(--border);border-radius:10px;padding:8px 10px;"><summary style="cursor:pointer;font-size:13px;font-weight:700;">💬 إرسال النسخة لنفسي على واتساب (رقمك + خطوتين)</summary>
     <label style="display:block;font-size:12px;color:var(--dim);margin-top:8px;text-align:right">رقم الواتساب بتاعك<input type="tel" id="bk-owner" placeholder="01xxxxxxxxx" style="width:100%;padding:9px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);font-family:inherit;margin-top:4px;text-align:center"></label>
@@ -426,7 +433,7 @@
     document.getElementById('ov-backup').classList.add('show');
   }
   function buildBackupData(){
-    var data = { type:'moviq-all', version:1, appVersion:'v13', exportedAt:new Date().toISOString(),
+    var data = { type:'moviq-all', version:1, appVersion:'v14', exportedAt:new Date().toISOString(),
       premium: parse('moviq_premium', null), booking:{}, calc: parse('moviq_calc', {}), hep:{}, diet: parse('moviq_diet', {}), reception: ls('moviq_reception_phone')||'', owner: ls('moviq_owner_phone')||'' };
     HEP_KEYS.forEach(function(k){ var v=ls(k); if(v!=null) data.hep[k]=v; });
     BOOK_KEYS.forEach(function(k){ data.booking[k] = parse('moviq_'+k, []); });
@@ -877,6 +884,7 @@
   // the upload screen's file picker behaves like the empty-cloud one
   document.querySelectorAll('.lg-file-in').forEach(function(inp){ inp.addEventListener('change', function(e){ var f = e.target.files[0]; e.target.value=''; if(f){ try{ sessionStorage.setItem('mvcs_autoup', UID); }catch(x){} importFile(f); } }); });
   // ---- start ----
+  if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){ try{ navigator.serviceWorker.register('sw.js').catch(function(){}); }catch(e){} }
   cloudBoot();
 })();
 </script>
